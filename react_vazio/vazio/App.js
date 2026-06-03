@@ -1,22 +1,28 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, ScrollView } from 'react-native';
 
 export default function App() {
   return (
-        <View style={styles.container}>
+    <ScrollView>
+    <View style={styles.container}>
       <Text style={styles.red}>just red</Text>
       <Text style={styles.bigBlue}>just bigBlue</Text>
       <Text style={[styles.bigBlue, styles.red]}>bigBlue, then red</Text>
       <Text style={[styles.red, styles.bigBlue]}>red, then bigBlue</Text>
     </View> 
+  <ScrollView/>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-      width: 150,
-          height: 150,
-          backgroundColor: 'steelblue',
+  titulo: {
+      marginTop: 20,
+      width: 200,
+      alignSelf: 'center',
+      backgroundColor: 'black',
+      boderColor: 'yellow',
+      boderWidth: 2,
+      
   },
   bigBlue: {
     color: 'blue',
