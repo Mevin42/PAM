@@ -51,6 +51,13 @@ export default function Login({ navigation }) {
       />
 
       <Button title="Entrar" onPress={fazerLogin} />
+
+      <View style={{ marginTop: 15 }}>
+        <Button
+          title="Criar uma conta"
+          onPress={() => navigation.navigate('Cadastro')}
+        />
+      </View>
     </View>
   );
 }
