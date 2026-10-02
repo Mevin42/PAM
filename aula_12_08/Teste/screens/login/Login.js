@@ -26,9 +26,9 @@ export default function Login({ navigation }) {
   return (
     <View style={styles.container}>
       <Image
-        source={{ uri: 'https://reactnative.dev/docs/assets/p_cat1.png' }}
+        source={require('../../assets/as.png')}
         style={styles.imagem}
-      />
+     />
 
       <Text style={styles.titulo}>Login</Text>
 
