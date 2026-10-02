@@ -14,15 +14,10 @@ const dados = [4, 6, 8, 10, 12, 20, 100];
 export default function Home() {
   const [dadoSelecionado, setDadoSelecionado] = useState(20);
   const [resultado, setResultado] = useState(null);
-  const [historico, setHistorico] = useState([]);
 
   function rolar() {
     const valor = rolarDado(dadoSelecionado);
     setResultado(valor);
-    setHistorico((anterior) => [
-      { dado: dadoSelecionado, valor },
-      ...anterior
-    ].slice(0, 10));
   }
 
   return (
@@ -70,16 +65,6 @@ export default function Home() {
         </Text>
       </View>
 
-      {historico.length > 0 && (
-        <View style={styles.historicoBox}>
-          <Text style={styles.historicoTitulo}>Últimas rolagens</Text>
-          {historico.map((item, index) => (
-            <Text key={index} style={styles.historicoItem}>
-              D{item.dado} → {item.valor}
-            </Text>
-          ))}
-        </View>
-      )}
     </ScrollView>
   );
 }
