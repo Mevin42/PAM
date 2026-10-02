@@ -80,21 +80,6 @@ const styles = StyleSheet.create({
     fontSize: 64,
     fontWeight: 'bold',
   },
-  historicoBox: {
-    marginTop: 5,
-    padding: 15,
-    borderRadius: 10,
-    backgroundColor: '#f7f7f7',
-  },
-  historicoTitulo: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    marginBottom: 8,
-  },
-  historicoItem: {
-    fontSize: 16,
-    paddingVertical: 3,
-  },
 });
 
 export default styles;
