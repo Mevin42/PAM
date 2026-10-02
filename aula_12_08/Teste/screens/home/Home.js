@@ -2,66 +2,84 @@ import { useState } from 'react';
 import {
   View,
   Text,
-  TextInput,
-  TouchableOpacity
+  TouchableOpacity,
+  ScrollView
 } from 'react-native';
 
 import styles from './Estilos';
-import { realizarCalculo } from './Funcoe';
+import { rolarDado } from './Funcoe';
+
+const dados = [4, 6, 8, 10, 12, 20, 100];
 
 export default function Home() {
-  const [numero1, setNumero1] = useState('');
-  const [numero2, setNumero2] = useState('');
-  const [operacao, setOperacao] = useState('+');
-  const [resultado, setResultado] = useState('');
+  const [dadoSelecionado, setDadoSelecionado] = useState(20);
+  const [resultado, setResultado] = useState(null);
+  const [historico, setHistorico] = useState([]);
 
-  function calcular() {
-    realizarCalculo(numero1, numero2, operacao, setResultado);
+  function rolar() {
+    const valor = rolarDado(dadoSelecionado);
+    setResultado(valor);
+    setHistorico((anterior) => [
+      { dado: dadoSelecionado, valor },
+      ...anterior
+    ].slice(0, 10));
   }
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.titulo}>Calculadora</Text>
+    <ScrollView contentContainerStyle={styles.container}>
+      <Text style={styles.titulo}>Rolador de Dados</Text>
+      <Text style={styles.subtitulo}>Escolha um dado</Text>
 
-      <TextInput
-        style={styles.input}
-        placeholder="Primeiro número"
-        keyboardType="numeric"
-        value={numero1}
-        onChangeText={setNumero1}
-      />
-
-      <TextInput
-        style={styles.input}
-        placeholder="Segundo número"
-        keyboardType="numeric"
-        value={numero2}
-        onChangeText={setNumero2}
-      />
-
-      <View style={styles.operacoes}>
-        {['+', '-', '*', '/'].map((item) => (
+      <View style={styles.dados}>
+        {dados.map((dado) => (
           <TouchableOpacity
-            key={item}
-            style={styles.botao}
-            onPress={() => setOperacao(item)}
+            key={dado}
+            style={[
+              styles.botaoDado,
+              dadoSelecionado === dado && styles.botaoDadoSelecionado
+            ]}
+            onPress={() => {
+              setDadoSelecionado(dado);
+              setResultado(null);
+            }}
           >
-            <Text style={styles.textoBotao}>{item}</Text>
+            <Text
+              style={[
+                styles.textoDado,
+                dadoSelecionado === dado && styles.textoDadoSelecionado
+              ]}
+            >
+              D{dado}
+            </Text>
           </TouchableOpacity>
         ))}
       </View>
 
-      <Text style={styles.operacaoSelecionada}>
-        Operação: {operacao}
+      <Text style={styles.selecionado}>
+        D{dadoSelecionado} selecionado
       </Text>
 
-      <TouchableOpacity style={styles.botaoCalcular} onPress={calcular}>
-        <Text style={styles.textoCalcular}>Calcular</Text>
+      <TouchableOpacity style={styles.botaoRolar} onPress={rolar}>
+        <Text style={styles.textoRolar}>ROLAR D{dadoSelecionado}</Text>
       </TouchableOpacity>
 
-      <Text style={styles.resultado}>
-        Resultado: {resultado}
-      </Text>
-    </View>
+      <View style={styles.resultadoBox}>
+        <Text style={styles.resultadoLabel}>RESULTADO</Text>
+        <Text style={styles.resultado}>
+          {resultado === null ? '?' : resultado}
+        </Text>
+      </View>
+
+      {historico.length > 0 && (
+        <View style={styles.historicoBox}>
+          <Text style={styles.historicoTitulo}>Últimas rolagens</Text>
+          {historico.map((item, index) => (
+            <Text key={index} style={styles.historicoItem}>
+              D{item.dado} → {item.valor}
+            </Text>
+          ))}
+        </View>
+      )}
+    </ScrollView>
   );
 }
