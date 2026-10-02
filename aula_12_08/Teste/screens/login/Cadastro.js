@@ -13,22 +13,26 @@ import { cadastrarUsuario } from './Funcoe';
 export default function Cadastro({ navigation }) {
   const [usuario, setUsuario] = useState('');
   const [senha, setSenha] = useState('');
-  const [confirmarSenha, setConfirmarSenha] = useState('');
+  const [cSenha, setCSenha] = useState('');
 
   function fazerCadastro() {
-    const resultado = cadastrarUsuario(usuario, senha, confirmarSenha);
+    const resultado = cadastrarUsuario(usuario, senha, cSenha);
 
     if (!resultado.sucesso) {
       Alert.alert('Atenção', resultado.mensagem);
       return;
     }
 
-    Alert.alert('Cadastro realizado!', 'Agora você pode fazer login.', [
-      {
-        text: 'OK',
-        onPress: () => navigation.navigate('Login')
-      }
-    ]);
+    Alert.alert(
+      'Cadastro realizado!',
+      'Sua conta foi criada com sucesso!',
+      [
+        {
+          text: 'OK',
+          onPress: () => navigation.replace('Login')
+        }
+      ]
+    );
   }
 
   return (
@@ -57,8 +61,8 @@ export default function Cadastro({ navigation }) {
       <TextInput
         placeholder="Digite a senha novamente"
         style={styles.input}
-        value={confirmarSenha}
-        onChangeText={setConfirmarSenha}
+        value={cSenha}
+        onChangeText={setCSenha}
         secureTextEntry
       />
 
